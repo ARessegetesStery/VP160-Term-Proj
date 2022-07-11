@@ -13,11 +13,11 @@ def getxList(steps):
         vxListEuler.append(temp)
         xListEuler.append(xListEuler[i - 1] + vxListEuler[i - 1] * deltaT)
 
-    xListNumerical = []
+    xListAnalytical = []
     for j in range(0, steps):
-        xListNumerical.append(vx0 * m / k *
+        xListAnalytical.append(vx0 * m / k *
                               (1 - math.exp(-k / m * deltaT * j)))
-    return (xListEuler, xListNumerical)
+    return (xListEuler, xListAnalytical)
 
 
 def getyList(steps):
@@ -32,12 +32,12 @@ def getyList(steps):
         vyListEuler.append(temp)
         yListEuler.append(yListEuler[i - 1] + vyListEuler[i - 1] * deltaT)
 
-    yListNumerical = []
+    yListAnalytical = []
     for j in range(0, steps):
-        yListNumerical.append((vy0 + m * g / k) * m / k *
+        yListAnalytical.append((vy0 + m * g / k) * m / k *
                               (1 - math.exp(-k / m * j * deltaT)) -
                               m * g / k * j * deltaT)
-    return (yListEuler, yListNumerical)
+    return (yListEuler, yListAnalytical)
 
 
 fig = plt.figure()
@@ -58,13 +58,13 @@ ax1.set(xlim=[0, 100],
         ylabel='displacement in y direction (m)',
         xlabel='displacement in x direction (m)')
 steps1 = 100
-(xListEuler1, xListNumerical1) = getxList(steps1)
-(yListEuler1, yListNumerical1) = getyList(steps1)
+(xListEuler1, xListAnalytical1) = getxList(steps1)
+(yListEuler1, yListAnalytical1) = getyList(steps1)
 plot1 = plt.plot(xListEuler1, yListEuler1, color='red', label="Euler\' Method")
-plot2 = plt.plot(xListNumerical1,
-                 yListNumerical1,
+plot2 = plt.plot(xListAnalytical1,
+                 yListAnalytical1,
                  color='blue',
-                 label="Numerical")
+                 label="Analytical")
 plt.legend(loc='upper right', fontsize="7")
 
 # start drawing the second picture
@@ -75,13 +75,13 @@ ax2.set(xlim=[0, 100],
         ylabel='displacement in y direction (m)',
         xlabel='displacement in x direction (m)')
 steps2 = 75
-(xListEuler2, xListNumerical2) = getxList(steps2)
-(yListEuler2, yListNumerical2) = getyList(steps2)
+(xListEuler2, xListAnalytical2) = getxList(steps2)
+(yListEuler2, yListAnalytical2) = getyList(steps2)
 plot3 = plt.plot(xListEuler2, yListEuler2, color='red', label="Euler\' Method")
-plot4 = plt.plot(xListNumerical2,
-                 yListNumerical2,
+plot4 = plt.plot(xListAnalytical2,
+                 yListAnalytical2,
                  color='blue',
-                 label="Numerical")
+                 label="Analytical")
 plt.legend(loc='upper right', fontsize="7")
 
 # start drawing the third picture
@@ -92,29 +92,35 @@ ax3.set(xlim=[0, 100],
         ylabel='displacement in y direction (m)',
         xlabel='displacement in x direction (m)')
 steps3 = 50
-(xListEuler3, xListNumerical3) = getxList(steps3)
-(yListEuler3, yListNumerical3) = getyList(steps3)
+(xListEuler3, xListAnalytical3) = getxList(steps3)
+(yListEuler3, yListAnalytical3) = getyList(steps3)
 plot5 = plt.plot(xListEuler3, yListEuler3, color='red', label="Euler\' Method")
-plot6 = plt.plot(xListNumerical3,
-                 yListNumerical3,
+plot6 = plt.plot(xListAnalytical3,
+                 yListAnalytical3,
                  color='blue',
-                 label="Numerical")
+                 label="Analytical")
 plt.legend(loc='upper right', fontsize="7")
 
-# start drawing the fourth picture
-ax4 = fig.add_subplot(2, 2, 4)
-ax4.set(xlim=[0, 100],
+# start drawing the fourth picture (check sensitivity)
+ax3 = fig.add_subplot(2, 2, 4)
+ax3.set(xlim=[0, 100],
         ylim=[0, 50],
-        title=r'step $\Delta t=0.32s$',
+        title='Sensitivity Examination',
         ylabel='displacement in y direction (m)',
         xlabel='displacement in x direction (m)')
-steps4 = 25
-(xListEuler4, xListNumerical4) = getxList(steps4)
-(yListEuler4, yListNumerical4) = getyList(steps4)
-plot7 = plt.plot(xListEuler4, yListEuler4, color='red', label="Euler\' Method")
-plot8 = plt.plot(xListNumerical4,
-                 yListNumerical4,
-                 color='blue',
-                 label="Numerical")
+steps1=100
+steps2=75
+steps3 =50
+# get x
+(xListEuler1, xListAnalytical1) = getxList(steps1)
+(xListEuler2, xListAnalytical2) = getxList(steps2)
+(xListEuler3, xListAnalytical3) = getxList(steps3)
+# get y
+(yListEuler1, yListAnalytical1) = getyList(steps1)
+(yListEuler2, yListAnalytical2) = getyList(steps2)
+(yListEuler3, yListAnalytical3) = getyList(steps3)
+plot7 = plt.plot(xListEuler1, yListEuler1, color='red', label=r"$step\quad \Delta t=0.08s$")
+plot8 = plt.plot(xListEuler2, yListEuler2,color='blue',label=r"$step\quad \Delta t=0.107s$")
+plot9 = plt.plot(xListEuler3, yListEuler3,color='orange',label=r"$step\quad \Delta t=0.16s$")
 plt.legend(loc='upper right', fontsize="7")
 plt.show()
