@@ -3,21 +3,23 @@ import numpy as np
 import math
 steps,m, v0 = 100,1, 90  # the variables
 alpha=np.pi/6
+g=9.8
 def getCoordinateList(k):
+    t=np.linspace(0,8,steps)
     vx0 = v0 * math.cos(alpha)
     vy0 = v0 * math.sin(alpha)
-    deltaT = 0.08
-    g = 9.8
-    t = np.linspace(start=0, stop=8, num=steps)
-    vxListAnalytical = []
-    vyListAnalytical = []
-    for j in range(0, steps):
-        vxListAnalytical.append(vx0*math.exp(-k/m*j*deltaT))
-    for j in range(0, steps):
-        vyListAnalytical.append((vy0+m*g/k)*math.exp(-k/m*j*deltaT)-m*g/k)
+    deltaT = 8 / steps
+    vxListEuler = [vx0]
+    for i in range(1, steps):
+        temp = vxListEuler[i - 1] * (1 - k / m * deltaT)
+        vxListEuler.append(temp)
+    vyListEuler = [vy0]
+    for i in range(1, steps):
+        temp = vyListEuler[i - 1] * (1 - k / m * deltaT) - g * deltaT
+        vyListEuler.append(temp)
     speed=[]
     for j in range(0,steps):
-        speed.append(math.sqrt(vxListAnalytical[j]**2+vyListAnalytical[j]**2))
+        speed.append(math.sqrt(vxListEuler[j]**2+vyListEuler[j]**2))
     return (speed,t)
 
 fig = plt.figure()

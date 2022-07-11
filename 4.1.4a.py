@@ -2,21 +2,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 alpha,steps,m,v0 = np.pi/6,100,1, 90  # the variables
+g=9.8
 def getCoordinateList(k):
     vx0 = v0 * math.cos(alpha)
     vy0 = v0 * math.sin(alpha)
-    deltaT = 0.08
-    g = 9.8
-    xListAnalytical = []
-    yListAnalytical = []
-    for j in range(0, steps):
-        xListAnalytical.append(vx0 * m / k *
-                              (1 - math.exp(-k / m * deltaT * j)))
-    for j in range(0, steps):
-        yListAnalytical.append((vy0 + m * g / k) * m / k *
-                              (1 - math.exp(-k / m * j * deltaT)) -
-                              m * g / k * j * deltaT)
-    return (xListAnalytical,yListAnalytical)
+    deltaT = 8 / steps
+    vxListEuler = [vx0]
+    xListEuler = [0]
+    for i in range(1, steps):
+        temp = vxListEuler[i - 1] * (1 - k / m * deltaT)
+        vxListEuler.append(temp)
+        xListEuler.append(xListEuler[i - 1] + vxListEuler[i - 1] * deltaT)
+    vyListEuler = [vy0]
+    yListEuler = [0]
+    for i in range(1, steps):
+        temp = vyListEuler[i - 1] * (1 - k / m * deltaT) - g * deltaT
+        vyListEuler.append(temp)
+        yListEuler.append(yListEuler[i - 1] + vyListEuler[i - 1] * deltaT)
+    return(xListEuler,yListEuler)
 
 
 

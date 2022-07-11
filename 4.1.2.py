@@ -21,7 +21,6 @@ def getxList(steps):
 
 
 def getyList(steps):
-    t = np.linspace(start=0, stop=8, num=steps)
     vy0 = v0 * math.sin(alpha)
     deltaT = 8 / steps
     g = 9.8
