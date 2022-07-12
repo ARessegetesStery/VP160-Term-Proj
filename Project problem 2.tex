@@ -51,7 +51,6 @@ From the Newton's Second Law, we get the equation:
     \ddot{x} = -\omega_{0}^2 x
 \end{equation} 
 
-%% Add: the meaning of each variables
 In Euler's method, we'll use approximated values to  get the equation for distance: 
 
 \begin{align}
@@ -103,10 +102,7 @@ Hence, we get the general solution for this harmonic oscillation.
     v(t) &= -\frac{5}{4} sin( 1.5 t + arcsin(-\frac{4}{5}) )
 \end{align}
 
-
-
-\section{Graph about velocity and distance}
-As is listed before, 
+As we have derived from Euler's method: 
 
 \begin{align}
     x_{i+1} &= x_{i} + v_{i} \Delta t &
@@ -120,18 +116,19 @@ with the initial status:
     v(0) &= 1 \ m/s \nonumber 
 \end{align}
 
-we can get the graph below: 
-%% Add: Euler graphs
+From the calculation above, we can get two graphs in configuration space. We can see from the graph below that as the steps are shortened, the accuracy of the graph increases. 
 
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics{.png}
-% \end{figure}
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Figure4.2.2-1.png}
+    \caption{Displacement in Configuration Space}
+\end{figure} 
 
-% Add: more analysis
-We can see from the difference that as the steps are shortened, the accuracy of the graph increases. 
-
-
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Figure4.2.2-2.png}
+    \caption{Trajectory in Configuration Space}
+\end{figure} 
 
 \section{Graph about energy}
 Then we will look at the energy of a harmonic oscillator. This can be calculated as: 
@@ -152,12 +149,11 @@ We plug in the variables calculated before, and get the following:
 
 We can tell from this equation that the total energy of the harmonic oscillator is constant. Also, we can give the graph of the energy depicted by the Euler method: 
 
-%% Add: picture about the energy
-
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics{.png}
-% \end{figure}
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Figure4.2.3-2.png}
+    \caption{Graph of Energy using Euler's method}
+\end{figure} 
 
 The graph demonstrate from the calculation that the energy is constant. Actually, this energy can be separated in two parts. One is kinetic energy $E_k = \frac{1}{2}mv_x^2$, and the other one is potential energy $E_p = \frac{1}{2} k x^2 = \frac{1}{2} m \omega_0^2 x^2$. It is worth mentioning that $k = m \omega_0^2$, which can be derived from basic function of harmonic oscillation. 
 
@@ -207,14 +203,25 @@ The way Heun's method handles this is by considering the entire interval spanned
 
 We can tell from the graphs below that the solution of this method is more accurate than Euler's method. 
 
-%% Add: graphs about velocity and distance using Heun's method
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Figure4.2.5-1.png}
+    \caption{Difference between Euler and Heun's method in displacemnent}
+\end{figure} 
 
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics{.png}
-% \end{figure}
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Figure4.2.5-2.png}
+    \caption{Difference between Euler and Heun's method in phase space}
+\end{figure} 
 
-Euler's method is the basis of Heun's method. This is because Euler's method uses the function tangent at the beginning and end of the interval to estimate the slope of the function in this interval, and assumes that if the step size is small, the error is small. However, even when the step size is very small, the accumulated error due to a large number of steps deviates the estimate from the value of the actual function. So we need various ways to estimate how a curve goes. 
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Figure4.2.5-3.png}
+    \caption{Difference between Euler and Heun's method in energy}
+\end{figure} 
+
+We can get a rough conclusion from the three graphs above that Euler's method is the basis of Heun's method, and that Heun's method is more precise. This is because Euler's method uses the function tangent at the beginning and end of the interval to estimate the slope of the function in this interval, and assumes that if the step size is small, the error is small. However, even when the step size is very small, the accumulated error due to a large number of steps deviates the estimate from the value of the actual function. So we need various ways to estimate how a curve goes. 
 
 
 %%%%%%%%%%%%%%
