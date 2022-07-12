@@ -1,0 +1,232 @@
+\documentclass[12pt]{article}
+
+% Preamble
+
+\usepackage{physics} 
+\usepackage{siunitx} 
+\usepackage{enumerate} 
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{tikz,pgfplots}
+\usepackage{amsthm}
+\usepackage{amsmath,amssymb}
+\usepackage{amstext}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{appendix}
+	
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+\pgfplotsset{compat=1.14}
+
+\setlength{\parindent}{2em}
+
+\begin{document}
+
+\title{4.2 Simple harmonic oscillator}
+\author{SM \and KK}
+\maketitle
+
+
+\section{Intro}
+When calculating an approximated value of a derivative function, it is generally done by a computer to take a series of values at equal intervals and bring them into the formula to obtain the maximum value or the optimal solution. The evaluation of the pros and cons can be done by judging the closeness of the obtained solution to the real one, that is, the deviation. The time used by different algorithms is also taken into account, meaning the efficiency of an algorithm.Those algorithms represent a systematic approach to describing a strategic mechanism for solving a problem. The required output can be obtained in a limited time for a certain specification of input.\\
+
+If an algorithm is flawed, or not suitable for a problem, executing the algorithm will not solve the problem. Meanwhile, different algorithms may accomplish the same task with different time, space or efficiency. The pros and cons of an algorithm need to be measured by space complexity and time complexity.
+
+
+
+\section{Recursive equations with Euler's method}
+Then comes to the harmonic oscillation. The motion of simple harmonic oscillator we are dealing with only has one dimension, we set this direction as x-axis. \\
+
+From the Newton's Second Law, we get the equation: 
+
+\begin{equation}
+    \ddot{x} = -\omega_{0}^2 x
+\end{equation} 
+
+%% Add: the meaning of each variables
+In Euler's method, we'll use approximated values to  get the equation for distance: 
+
+\begin{align}
+    x_{i+1} &= x_{i} + \frac{dx}{dt} \Delta t \\
+            &= x_{i} + v_{i} \Delta t \nonumber 
+\end{align}
+
+where $\Delta t$ means a step in Euler's method, $x_{i}$ means the position of the oscillator on the x axis at the i th step $i \Delta t$, and $v_{i}$ means the velocity on the x axis at $i \Delta t$. \\
+
+Similarly, we can get the velocity of oscillation: 
+
+\begin{align}
+    v_{i+1} &= v_{i} + \frac{dv}{dt} \Delta t \\
+            &= v_{i} + a_{x,i} \Delta t \nonumber \\
+            &= v_{i} - \omega_{0}^2 x_{i} \Delta t \nonumber 
+\end{align}
+
+To calculate the initial status of distance and velocity, we need to use the general solution of harmonic oscillation, that is: 
+
+\begin{equation}
+    x(t) = A cos( \omega_{0} t + \phi )
+\end{equation}
+
+Take the derivative of $t$ for both sides, and we will get: 
+
+\begin{equation}
+    v(t) = -A \omega_{0} sin( \omega_{0} t + \phi )
+\end{equation}
+
+We can derive $A$ and $cos(\phi)$ from the equation above: 
+
+\begin{align}
+    A &= \sqrt{(A sin(\phi))^2 + (A cos(\phi))^2} \\
+      &= \sqrt{\left( \frac{v(0)}{\omega_{0}} \right)^2 + x(0)^2} \nonumber \\
+      &= \sqrt{\left( \frac{1}{1.5} \right)^2 + 0.5^2} \nonumber \\
+      &= \frac{5}{6} \nonumber 
+\end{align}
+
+\begin{align}
+    sin(\phi) &= \frac{v(0)}{-A \omega_{0}} \\
+              &= \frac{1}{-\frac{5}{6} \times 1.5} \nonumber \\
+              &= -\frac{4}{5} \nonumber
+\end{align}
+
+Hence, we get the general solution for this harmonic oscillation. 
+
+\begin{align}
+    x(t) &= \frac{5}{6} cos( 1.5 t + arcsin(-\frac{4}{5}) ) & 
+    v(t) &= -\frac{5}{4} sin( 1.5 t + arcsin(-\frac{4}{5}) )
+\end{align}
+
+
+
+\section{Graph about velocity and distance}
+As is listed before, 
+
+\begin{align}
+    x_{i+1} &= x_{i} + v_{i} \Delta t &
+    v_{i+1} &= v_{i} - \omega_{0}^2 x_{i} \Delta t \nonumber 
+\end{align}
+
+with the initial status: 
+
+\begin{align}
+    x(0) &= 0.5 \ m & 
+    v(0) &= 1 \ m/s \nonumber 
+\end{align}
+
+we can get the graph below: 
+%% Add: Euler graphs
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics{.png}
+% \end{figure}
+
+% Add: more analysis
+We can see from the difference that as the steps are shortened, the accuracy of the graph increases. 
+
+
+
+\section{Graph about energy}
+Then we will look at the energy of a harmonic oscillator. This can be calculated as: 
+
+\begin{equation}
+    E(t) = \frac{1}{2} m \omega_{0}^2 x^2 + \frac{1}{2} m v_{x}^2 
+\end{equation}
+
+We plug in the variables calculated before, and get the following: 
+
+\begin{align}
+    E(t) &= \frac{1}{2} m \omega_{0}^2 x^2 + \frac{1}{2} m v_{x}^2 \\
+         &= \frac{1}{2} m \omega_{0}^2 (A cos( \omega_{0} t + \phi ))^2 + \frac{1}{2} m (-A \omega_{0} sin( \omega_{0} t + \phi ))^2 \nonumber \\
+         &= \frac{1}{2} \times 1.5^2 m (\frac{5}{6} cos( 1.5 t + arcsin(-\frac{4}{5}) ))^2 + \frac{1}{2} m (-\frac{5}{4} sin( 1.5 t + arcsin(-\frac{4}{5}) ))^2 \nonumber \\
+         &= m\left(\frac{25}{32}cos( 1.5 t + arcsin(-\frac{4}{5}))^2 + \frac{25}{32}sin( 1.5 t + arcsin(-\frac{4}{5}))^2\right) \nonumber \\
+         &= \frac{25}{32}m \nonumber
+\end{align}
+
+We can tell from this equation that the total energy of the harmonic oscillator is constant. Also, we can give the graph of the energy depicted by the Euler method: 
+
+%% Add: picture about the energy
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics{.png}
+% \end{figure}
+
+The graph demonstrate from the calculation that the energy is constant. Actually, this energy can be separated in two parts. One is kinetic energy $E_k = \frac{1}{2}mv_x^2$, and the other one is potential energy $E_p = \frac{1}{2} k x^2 = \frac{1}{2} m \omega_0^2 x^2$. It is worth mentioning that $k = m \omega_0^2$, which can be derived from basic function of harmonic oscillation. 
+
+
+
+\section{Recursive Heun's equations for the simple harmonic
+oscillator}
+
+Then we'll focus on Heun's equation. It has many similarities with Euler method. To make the variables look consistent, we reuse the notations above. \\
+
+As is discussed before, we can get the first evaluation $\tilde{x}_{i+1}$ and $\tilde{v}_{i+1}$ in the Heun's equation. 
+
+\begin{align}
+    \tilde{x}_{i+1}  &= x_{i} + \frac{dx}{dt} \Delta t \\
+                     &= x_{i} + v_{i} \Delta t \nonumber 
+\end{align}
+
+\begin{align}
+    \tilde{v}_{i+1} &= v_{i} + \frac{dv}{dt} \Delta t \\
+                    &= v_{i} + a_{x,i} \Delta t \nonumber \\
+                    &= v_{i} - \omega_{0}^2 x_{i} \Delta t \nonumber 
+\end{align}
+
+Then we can get the approximated value of $x_{i+1}$ and $v_{i+1}$: 
+
+\begin{align}
+    x_{i+1} &= x_{i} + \frac{1}{2} (v_{i} + \tilde{v}_{i+1}) \Delta t
+\end{align}
+
+\begin{align}
+    v_{i+1} &= v_{i} - \frac{1}{2} \omega_{0}^2 (x_{i} + \tilde{x}_{i+1}) \Delta t
+\end{align}
+
+We plug in $\tilde{x}_{i+1}$ and $\tilde{v}_{i+1}$ calculated before, and well get the equation for Heun's method. 
+
+\begin{align}
+    x_{i+1} &= x_{i} + \frac{1}{2} (2v_{i} - \omega_{0}^2 x_{i}) \Delta t
+\end{align}
+
+\begin{align}
+    v_{i+1} &= v_{i} - \frac{1}{2} \omega_{0}^2 (2x_{i} + v_{i} \Delta t) \Delta t
+\end{align}
+
+The way Heun's method handles this is by considering the entire interval spanned by the tangent segment. Taking a concave function as an example, a tangent prediction at the left endpoint of an interval underestimates the slope of the curve over the entire interval, while using a tangent at the right endpoint will overestimate it. Heun's method takes into account the tangents of the solution curve at both ends, one of which underestimates and the other overestimates the ideal ordinate. Therefore, the ideal point lies approximately between the overestimation and the underestimation, which is exactly the average of the two slopes.
+
+\section{Graph about velocity and distance using Heun's method}
+
+We can tell from the graphs below that the solution of this method is more accurate than Euler's method. 
+
+%% Add: graphs about velocity and distance using Heun's method
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics{.png}
+% \end{figure}
+
+Euler's method is the basis of Heun's method. This is because Euler's method uses the function tangent at the beginning and end of the interval to estimate the slope of the function in this interval, and assumes that if the step size is small, the error is small. However, even when the step size is very small, the accumulated error due to a large number of steps deviates the estimate from the value of the actual function. So we need various ways to estimate how a curve goes. 
+
+
+%%%%%%%%%%%%%%
+% This is the Bibliography
+%%%%%%%%%%%%%%
+
+\begin{thebibliography}{9}
+
+% Add: reference
+
+\end{thebibliography}
+
+% \clearpage
+
+\end{document}
