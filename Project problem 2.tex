@@ -36,14 +36,16 @@
 
 
 \section{Intro}
-When calculating an approximated value of a derivative function, it is generally done by a computer to take a series of values at equal intervals and bring them into the formula to obtain the maximum value or the optimal solution. The evaluation of the pros and cons can be done by judging the closeness of the obtained solution to the real one, that is, the deviation. The time used by different algorithms is also taken into account, meaning the efficiency of an algorithm.Those algorithms represent a systematic approach to describing a strategic mechanism for solving a problem. The required output can be obtained in a limited time for a certain specification of input.\\
+When calculating an approximated value of a derivative function, it is generally done by a computer to take a series of values at equal intervals and bring them into the formula to obtain the maximum value or the optimal solution. The evaluation of the pros and cons can be done by judging the closeness of the obtained solution to the real one, that is, the deviation. The time used by different algorithms is also taken into account, meaning the efficiency of an algorithm. Those algorithms represent a systematic approach to describing a strategic mechanism for solving a problem. The required output can be obtained in a limited time for a certain specification of input.\\
 
-If an algorithm is flawed, or not suitable for a problem, executing the algorithm will not solve the problem. Meanwhile, different algorithms may accomplish the same task with different time, space or efficiency. The pros and cons of an algorithm need to be measured by space complexity and time complexity.
+If an algorithm is flawed, or not suitable for a problem, executing the algorithm will not solve the problem. Meanwhile, different algorithms may accomplish the same task with different time, space or efficiency. The pros and cons of an algorithm need to be measured by space complexity and time complexity.\\
+
+In this problem, we will use Euler's method and Heun's method to calculate the simple harmonic oscillator. With graphs and calculations, we can assess the effectiveness and complexity of the two methods. 
 
 
 
 \section{Recursive equations with Euler's method}
-Then comes to the harmonic oscillation. The motion of simple harmonic oscillator we are dealing with only has one dimension, we set this direction as x-axis. \\
+Then comes to the harmonic oscillation. The motion of simple harmonic oscillator we are dealing with only has one dimension, we set this direction as x-axis and take the equilibrium position as the origin. \\
 
 From the Newton's Second Law, we get the equation: 
 
@@ -68,7 +70,7 @@ Similarly, we can get the velocity of oscillation:
             &= v_{i} - \omega_{0}^2 x_{i} \Delta t \nonumber 
 \end{align}
 
-To calculate the initial status of distance and velocity, we need to use the general solution of harmonic oscillation, that is: 
+To calculate the analytical result of distance and velocity, we need to use the general solution of harmonic oscillation, that is: 
 
 \begin{equation}
     x(t) = A cos( \omega_{0} t + \phi )
@@ -95,7 +97,7 @@ We can derive $A$ and $cos(\phi)$ from the equation above:
               &= -\frac{4}{5} \nonumber
 \end{align}
 
-Hence, we get the general solution for this harmonic oscillation. 
+Hence, we get the analytical solution for this harmonic oscillation. 
 
 \begin{align}
     x(t) &= \frac{5}{6} cos( 1.5 t + arcsin(-\frac{4}{5}) ) & 
@@ -116,7 +118,7 @@ with the initial status:
     v(0) &= 1 \ m/s \nonumber 
 \end{align}
 
-From the calculation above, we can get two graphs in configuration space. We can see from the graph below that as the steps are shortened, the accuracy of the graph increases. 
+From the calculation above, we can get two graphs in configuration and phase space. We can see from the graph below that as the steps are shortened, the accuracy of the graph increases. 
 
 \begin{figure}[htb]
     \centering
@@ -127,7 +129,7 @@ From the calculation above, we can get two graphs in configuration space. We can
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.8\textwidth]{img/Figure4.2.2-2.png}
-    \caption{Trajectory in Configuration Space}
+    \caption{Trajectory in Phase Space (Take mass to be 1kg)}
 \end{figure} 
 
 \section{Graph about energy}
@@ -155,14 +157,14 @@ We can tell from this equation that the total energy of the harmonic oscillator 
     \caption{Graph of Energy using Euler's method}
 \end{figure} 
 
-The graph demonstrate from the calculation that the energy is constant. Actually, this energy can be separated in two parts. One is kinetic energy $E_k = \frac{1}{2}mv_x^2$, and the other one is potential energy $E_p = \frac{1}{2} k x^2 = \frac{1}{2} m \omega_0^2 x^2$. It is worth mentioning that $k = m \omega_0^2$, which can be derived from basic function of harmonic oscillation. 
+The graph demonstrate from the calculation that the energy is constant. Actually, this energy can be separated in two parts. One is kinetic energy $E_k = \frac{1}{2}mv_x^2$, and the other one is potential energy $E_p = \frac{1}{2} k x^2 = \frac{1}{2} m \omega_0^2 x^2$. It is worth mentioning that $k = m \omega_0^2$, which can be derived from basic function of harmonic oscillation. Also, again from the graph, we can see that as the steps become denser, the accuracy increases. 
 
 
 
 \section{Recursive Heun's equations for the simple harmonic
 oscillator}
 
-Then we'll focus on Heun's equation. It has many similarities with Euler method. To make the variables look consistent, we reuse the notations above. \\
+Then we'll focus on Heun's equation. It has many similarities with Euler's method. To make the variables look consistent, we reuse the notations above. \\
 
 As is discussed before, we can get the first evaluation $\tilde{x}_{i+1}$ and $\tilde{v}_{i+1}$ in the Heun's equation. 
 
@@ -201,12 +203,12 @@ The way Heun's method handles this is by considering the entire interval spanned
 
 \section{Graph about velocity and distance using Heun's method}
 
-We can tell from the graphs below that the solution of this method is more accurate than Euler's method. 
+We can tell from the graphs below that with the same steps, the solution of this method is much more accurate than Euler's method. 
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.8\textwidth]{img/Figure4.2.5-1.png}
-    \caption{Difference between Euler and Heun's method in displacemnent}
+    \caption{Difference between Euler and Heun's method in configuration space}
 \end{figure} 
 
 \begin{figure}[htb]
@@ -221,7 +223,7 @@ We can tell from the graphs below that the solution of this method is more accur
     \caption{Difference between Euler and Heun's method in energy}
 \end{figure} 
 
-We can get a rough conclusion from the three graphs above that Euler's method is the basis of Heun's method, and that Heun's method is more precise. This is because Euler's method uses the function tangent at the beginning and end of the interval to estimate the slope of the function in this interval, and assumes that if the step size is small, the error is small. However, even when the step size is very small, the accumulated error due to a large number of steps deviates the estimate from the value of the actual function. So we need various ways to estimate how a curve goes. 
+We can get a rough conclusion from the three graphs above that Euler's method is the basis of Heun's method, and that Heun's method is much more precise. This is because Euler's method uses the function tangent at the beginning and end of the interval to estimate the slope of the function in this interval, and assumes that if the step size is small, the error is small. However, even when the step size is very small, the accumulated error due to a large number of steps deviates the estimate from the value of the actual function. So we need various ways to estimate how a curve goes. 
 
 
 %%%%%%%%%%%%%%
